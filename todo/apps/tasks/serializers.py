@@ -1,0 +1,21 @@
+from .models import Task
+from .relations import AssignedToRelation
+
+from rest_framework import serializers
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    created_by = serializers.StringRelatedField()
+    #assigned_to = AssignedToRelation()
+    assigned_to = serializers.HyperlinkedRelatedField(queryset=Task.objects.all(), view_name="task-detail")
+
+    class Meta:
+        model = Task
+        #exclude = ("id", )
+        fields = ('assigned_to', 'created_by', )
+        read_only_fields = ("created_by", )
+
+    def save(self, *args, **kwargs):
+        request = self.context["request"]
+        self.initial_data["created_by"] = request.user.id
+        super().save(*args, **kwargs)
