@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'debug_toolbar',
     'rest_framework.authtoken',
+    'oauth2_provider', # OAuth provider
 
     'todo.apps.users.apps.UsersConfig',
     'todo.apps.tasks.apps.TasksConfig',
@@ -132,10 +133,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "static/"
+LOGIN_URL='/admin/login/'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CACHE_TTL = 60 * 1
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
@@ -149,6 +166,12 @@ SWAGGER_SETTINGS = {
         },
     },
 }
+
+OAUTH2_PROVIDER = {
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 36000,
+    'PKCE_REQUIRED': True
+}
+
 
 INTERNAL_IPS = [
     "127.0.0.1"
