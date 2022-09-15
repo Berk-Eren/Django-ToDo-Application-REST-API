@@ -134,6 +134,7 @@ AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "static/"
 LOGIN_URL='/admin/login/'
+LOGIN_REDIRECT_URL = '/admin/login/'
 
 CACHES = {
     "default": {
@@ -154,17 +155,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Token': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        },
-    },
+    'USE_SESSION_AUTH': True,
+    'LOGIN_URL': LOGIN_URL,
+    'LOGOUT_URL': LOGIN_URL,
 }
 
 OAUTH2_PROVIDER = {

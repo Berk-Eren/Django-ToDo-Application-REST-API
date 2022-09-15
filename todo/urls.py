@@ -16,32 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from rest_framework import permissions, authentication
-
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-
 from todo.apps.tasks.views import my_view
-
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="ToDoList API",
-        default_version="v1.0.0",
-        description="This is the API documentation for ToDo list.",
-        license=openapi.License(name="BSD License")
-    ),
-    public=True,
-    permission_classes = [permissions.IsAuthenticated],
-    authentication_classes = [authentication.SessionAuthentication]
-)
+from todo.core.views import swagger_schema_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tasks/', include("todo.apps.tasks.urls")),
     path('users/', include("todo.apps.users.urls")),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
+    path('swagger/', swagger_schema_view,#schema_view.with_ui('swagger', cache_timeout=0),
                         name='schema-swagger-ui'),
     path('oauth/', include('oauth2_provider.urls',
                                 namespace="oauth-provider")),
