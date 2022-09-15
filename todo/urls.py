@@ -19,6 +19,8 @@ from django.urls import path, include
 from todo.apps.tasks.views import my_view
 from todo.core.views import swagger_schema_view
 
+from two_factor.urls import urlpatterns as tf_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +31,6 @@ urlpatterns = [
     path('oauth/', include('oauth2_provider.urls',
                                 namespace="oauth-provider")),
     path('__debug__/', include('debug_toolbar.urls')),
-    path("add/", my_view)
+    path("add/", my_view),
+    path('', include(tf_urls))
 ]

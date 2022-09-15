@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework.authtoken',
     'oauth2_provider', # OAuth provider
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 
     'todo.apps.users.apps.UsersConfig',
     'todo.apps.tasks.apps.TasksConfig',
@@ -55,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware'
@@ -133,8 +138,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "static/"
-LOGIN_URL='/admin/login/'
-LOGIN_REDIRECT_URL = '/admin/login/'
+
+# LOGIN_URL='/admin/login/'
+# LOGIN_REDIRECT_URL = '/admin/login/'
+
+LOGIN_URL = 'two_factor:login'
+LOGIN_REDIRECT_URL = 'two_factor:profile' # Optional
+
 
 CACHES = {
     "default": {
