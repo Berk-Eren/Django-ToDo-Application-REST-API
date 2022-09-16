@@ -2,6 +2,6 @@ from django.apps import AppConfig
 
 
 class CommentsConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    label = 'comments'
+    default_auto_field = "django.db.models.BigAutoField"
+    label = "comments"
     name = "todo.apps.comments"

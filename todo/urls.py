@@ -23,14 +23,16 @@ from two_factor.urls import urlpatterns as tf_urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('tasks/', include("todo.apps.tasks.urls")),
-    path('users/', include("todo.apps.users.urls")),
-    path('swagger/', swagger_schema_view,#schema_view.with_ui('swagger', cache_timeout=0),
-                        name='schema-swagger-ui'),
-    path('oauth/', include('oauth2_provider.urls',
-                                namespace="oauth-provider")),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path("admin/", admin.site.urls),
+    path("tasks/", include("todo.apps.tasks.urls")),
+    path("users/", include("todo.apps.users.urls")),
+    path(
+        "swagger/",
+        swagger_schema_view,  # schema_view.with_ui('swagger', cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth-provider")),
+    path("__debug__/", include("debug_toolbar.urls")),
     path("add/", my_view),
-    path('', include(tf_urls))
+    path("", include(tf_urls)),
 ]

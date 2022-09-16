@@ -5,16 +5,21 @@ from rest_framework import serializers
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    #created_by = serializers.HyperlinkedRelatedField(read_only=True, 
+    # created_by = serializers.HyperlinkedRelatedField(read_only=True,
     #                                                    view_name="user-detail")
-    #assigned_to = AssignedToRelation()
-    #assigned_to = serializers.HyperlinkedRelatedField(read_only=True, 
+    # assigned_to = AssignedToRelation()
+    # assigned_to = serializers.HyperlinkedRelatedField(read_only=True,
     #                                                    view_name="user-detail")
 
     class Meta:
         model = Task
-        #exclude = ("id", )
-        fields = ('url', 'name', 'assigned_to', 'created_by', )
+        # exclude = ("id", )
+        fields = (
+            "url",
+            "name",
+            "assigned_to",
+            "created_by",
+        )
 
     def save(self, *args, **kwargs):
         request = self.context["request"]

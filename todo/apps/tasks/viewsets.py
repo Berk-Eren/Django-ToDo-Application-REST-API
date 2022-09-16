@@ -16,11 +16,15 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 
 @method_decorator(cache_control(private=True), name="dispatch")
 @method_decorator(vary_on_cookie, name="dispatch")
-@method_decorator(vary_on_headers("Authorization", ), name="dispatch")
+@method_decorator(
+    vary_on_headers(
+        "Authorization",
+    ),
+    name="dispatch",
+)
 @method_decorator(cache_page(settings.CACHE_TTL), name="dispatch")
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated\
-                            & IsOwnerOrAssignedPermission]
+    permission_classes = [IsAuthenticated & IsOwnerOrAssignedPermission]
     filter_backends = [IsOwnerOrAssignedPersonFilter]
