@@ -20,7 +20,7 @@ def checkPasswordsAreIncludedAndEqual(
     elif passwords["password2"] not in initial_data:
         raise serializers.ValidationError(
             "'%(password2)s' should be included inside of the initial_data."
-            % {"password2": passwords["password"]}
+            % {"password2": passwords["password2"]}
         )
     elif initial_data[passwords["password1"]] != initial_data[passwords["password2"]]:
         raise serializers.ValidationError(

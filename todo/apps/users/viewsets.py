@@ -9,3 +9,4 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [IsOwnerOrSuperuserFilter]
+    lookup_field = "username"

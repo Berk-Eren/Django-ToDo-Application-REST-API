@@ -28,11 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True, "required": False}}
 
     def create(self, validated_data):
-        checkPasswordsAreIncludedAndEqual(self.initial_data)
+        checkPasswordsAreIncludedAndEqual(validated_data)
+        validated_data.pop("password2")
 
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        checkPasswordsAreAEqualIfExist(self.initial_data)
+        checkPasswordsAreAEqualIfExist(validated_data)
+        validated_data.pop("password2", None)
 
         return super().update(instance, validated_data)
