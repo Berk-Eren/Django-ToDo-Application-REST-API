@@ -37,18 +37,27 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     "rest_framework",
+    "rest_framework.authtoken",
+    
     "drf_yasg",
     "debug_toolbar",
-    "rest_framework.authtoken",
+
     "oauth2_provider",  # OAuth provider
+    
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
     "two_factor",
+
     "todo.apps.users.apps.UsersConfig",
     "todo.apps.tasks.apps.TasksConfig",
     "todo.apps.comments.apps.CommentsConfig",
+    "todo.apps.chat.apps.ChatConfig",
+
+    "channels" # For chat application
+    #"core"
 ]
 
 MIDDLEWARE = [
@@ -82,6 +91,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "todo.wsgi.application"
+ASGI_APPLICATION = "todo.asgi.application"
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database

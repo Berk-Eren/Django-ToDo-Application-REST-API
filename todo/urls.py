@@ -35,4 +35,6 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("add/", my_view),
     path("", include(tf_urls)),
+
+    path('chat/', include('todo.apps.chat.urls'))
 ]
